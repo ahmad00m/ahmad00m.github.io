@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Preload next page for smoother nav -->
+    <link rel="prefetch" href="launchpad.html" as="document" />
+    <script type="speculationrules">
+      { "prerender": [{ "source": "document", "urls": ["launchpad.html"] }] }
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ahmad's Website</title>
+
+    <!-- Initial theme + background image (matches script & CSS variables) -->
+    <script>
+      const theme = localStorage.getItem("theme") || "light";
+      const bg =
+        theme === "dark"
+          ? "url('images/wallpaper_night.jpg')"
+          : "url('images/wallpaper_day.jpg')";
+      document.documentElement.style.setProperty("--bg-image", bg);
+      document.documentElement.classList.add(theme);
+    </script>
+
+    <!-- Google Analytics (disabled on localhost) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-ZD79PN3CDJ"
+    ></script>
+    <script>
+      if (location.hostname !== "localhost") {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", "G-ZD79PN3CDJ");
+      }
+    </script>
+
+    <!-- Styles & assets -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="preload" as="image" href="images/wallpaper_night.jpg" />
+    <link rel="preload" as="image" href="images/wallpaper_day.jpg" />
+  </head>
+
+  <body class="loading">
+    <!-- Theme toggle -->
+    <button id="theme-toggle">Light Mode</button>
+
+    <!-- Desktop area with draggable folders -->
+    <div id="desktop">
+      <div
+        class="folder"
+        style="top: 28%; left: 48%"
+        data-link="https://github.com/ahmad00m/EE260-project"
+        data-desc="assets/pj1_desc.pdf"
+      >
+        <img src="images/folder.png" alt="smart-tutor" />
+        <span>smart-tutor</span>
+      </div>
+
+      <div
+        class="folder"
+        style="top: 44%; left: 33%"
+        data-link="https://github.com/ahmad00m/CS236-project"
+        data-desc="assets/pj2_desc.pdf"
+      >
+        <img src="images/folder.png" alt="insight-lab" />
+        <span>insight-lab</span>
+      </div>
+
+      <div
+        class="folder"
+        style="top: 44%; left: 64%"
+        data-link="https://github.com/ahmad00m/Schedule-recommender"
+        data-desc="assets/pj3_desc.pdf"
+      >
+        <img src="images/folder.png" alt="timekeeper-ai" />
+        <span>timekeeper-ai</span>
+      </div>
+
+      <div
+        class="folder"
+        style="top: 60%; left: 48%"
+        data-link="https://github.com/ahmad00m/CS224-project"
+        data-desc="assets/pj4_desc.pdf"
+      >
+        <img src="images/folder.png" alt="ml-playground" />
+        <span>ml-playground</span>
+      </div>
+    </div>
+
+    <!-- Dock -->
+    <div id="dock">
+      <div class="dock-icon" onclick="openResumePrompt()">
+        <img src="images/text_edit.webp" alt="Resume" />
+        <div class="contact-description">Resume</div>
+      </div>
+
+      <div
+        class="dock-icon"
+        onclick="window.location.href='mailto:ahmad_mersaghian@yahoo.com'"
+      >
+        <img src="images/mail.png" alt="Contact" />
+        <div class="contact-description">Contact</div>
+      </div>
+
+      <div
+        class="dock-icon"
+        onclick="window.open('https://github.com/ahmad00m', '_blank')"
+      >
+        <img src="images/github_icon.png" alt="GitHub" />
+        <div class="contact-description">GitHub</div>
+      </div>
+
+      <div
+        class="dock-icon"
+        onclick="window.open('https://www.linkedin.com/in/ahmad-mersaghian/', '_blank')"
+      >
+        <img src="images/linked_icon.png" alt="LinkedIn" />
+        <div class="contact-description">LinkedIn</div>
+      </div>
+
+      <div class="dock-icon" onclick="location.href='launchpad.html'">
+        <img src="images/launch_icon.png" alt="Skills" />
+        <div class="contact-description">Skills</div>
+      </div>
+    </div>
+
+    <!-- Sticky note -->
+    <div class="sticky-note" id="intro-note">
+      <div class="sticky-content">
+        <p>
+          Hi, I'm Ahmad!<br />I'm a data science student and I work in ML.<br /><br />
+          <br /><br /><br /><br />
+          Well well... looks like you found the bottom!<br /><br />
+          You're clearly curious — I like that. <br /><br />
+          Shoot me a message if you're up for a cool project
+        </p>
+      </div>
+    </div>
+
+    <!-- Resume view choice prompt -->
+    <div id="resume-prompt-overlay" class="overlay" style="display: none">
+      <div id="resume-prompt" class="resume-prompt">
+        <p>How would you like to view my resume?</p>
+        <button onclick="showResume()">View on Page</button>
+        <button onclick="openPDF()">Open PDF in a New Tab</button>
+      </div>
+    </div>
+
+    <!-- Dim overlay behind inline resume -->
+    <div id="resume-overlay" style="display: none"></div>
+
+    <!-- Inline resume modal (iframe-based) -->
+    <div id="resume-app" class="resume-app" style="display: none">
+      <div class="word-toolbar">
+        <div class="mac-buttons">
+          <span class="btn red" onclick="closeResume()"></span>
+          <span class="btn yellow" onclick="closeResume()"></span>
+          <span class="btn green"></span>
+        </div>
+      </div>
+      <img src="images/word_home_rows.png" class="word-toolbar-img" alt="" />
+      <div class="resume-canvas">
+        <div class="resume-sheet">
+          <iframe
+            id="resume-iframe"
+            src="assets/resume.pdf#toolbar=0&view=FitH&zoom=100"
+            class="embedded-pdf"
+            allow="fullscreen"
+            style="border: none; width: 100%; height: 100%; background: white"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== File Window (per-folder mini "explorer") ===== -->
+    <div
+      id="file-overlay"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      "
+    ></div>
+
+    <div
+      id="file-window"
+      style="
+        display: none;
+        position: fixed;
+        top: 15%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 700px;
+        height: 300px;
+        background: #1e1e1e;
+        color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        z-index: 1001;
+        overflow: hidden;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+          Arial, sans-serif;
+      "
+    >
+      <!-- Title bar -->
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 14px;
+          background: #2b2b2b;
+        "
+      >
+        <span
+          class="btn"
+          style="
+            width: 12px;
+            height: 12px;
+            background: #ff5f56;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+          "
+          onclick="closeFileWindow()"
+        ></span>
+        <span
+          class="btn"
+          style="
+            width: 12px;
+            height: 12px;
+            background: #ffbd2e;
+            border-radius: 50%;
+            display: inline-block;
+          "
+        ></span>
+        <span
+          class="btn"
+          style="
+            width: 12px;
+            height: 12px;
+            background: #27c93f;
+            border-radius: 50%;
+            display: inline-block;
+          "
+        ></span>
+        <div id="file-window-title" style="margin-left: 8px; font-weight: 600">
+          Project
+        </div>
+      </div>
+
+      <!-- File list -->
+      <div style="padding: 10px 14px 6px; font-size: 14px; opacity: 0.9">
+        Items
+      </div>
+      <div style="padding: 0 8px 12px">
+        <div
+          id="file-row-description"
+          role="button"
+          tabindex="0"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            margin: 6px 0;
+            background: #262626;
+            border-radius: 10px;
+            cursor: pointer;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 10px">
+            <img
+              src="images/description.png"
+              alt=""
+              style="width: 20px; height: 20px"
+            />
+            <span>View description</span>
+          </div>
+          <span style="opacity: 0.6">Open</span>
+        </div>
+
+        <a
+          id="file-row-github"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          role="link"
+          tabindex="0"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            margin: 6px 0;
+            background: #262626;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 10px">
+            <img
+              src="images/github_icon.png"
+              alt=""
+              style="width: 20px; height: 20px"
+            />
+            <span>Link to GitHub</span>
+          </div>
+          <span style="opacity: 0.6">Open</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== Reference Viewer (for folder descriptions) ===== -->
+    <div
+      id="ref-overlay"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1100;
+      "
+    ></div>
+
+    <div id="ref-app" class="resume-app" style="display: none">
+      <div class="word-toolbar">
+        <div class="mac-buttons">
+          <span class="btn red" onclick="closeRefViewer()"></span>
+          <span class="btn yellow" onclick="closeRefViewer()"></span>
+          <span class="btn green"></span>
+        </div>
+      </div>
+      <img src="images/word_home_rows.png" class="word-toolbar-img" alt="" />
+      <div class="resume-canvas">
+        <div class="resume-sheet">
+          <iframe id="ref-iframe" class="embedded-pdf" src=""></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main scripts (theme, navigation, overlays, folders, file window, ref viewer) -->
+    <script src="script.js" defer></script>
+  </body>
+</html>
