@@ -8,6 +8,7 @@ import {
   Award,
   Book,
   User,
+  Mail,
 } from 'lucide-react';
 import { LinkedInIcon, GitHubIcon } from '@/components/shared/icons';
 
@@ -65,6 +66,11 @@ export const portfolioData = {
       label: 'Resume',
       href: '#resume',
       icon: FileText,
+    },
+    {
+      label: 'Contact',
+      href: '#contact',
+      icon: Mail,
     },
   ],
   hero: {

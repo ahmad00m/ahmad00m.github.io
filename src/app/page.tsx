@@ -7,6 +7,7 @@ import Awards from '@/components/sections/awards';
 import Sidebar from '@/components/layout/sidebar';
 import Resume from '@/components/sections/resume';
 import { Separator } from '@/components/ui/separator';
+import Contact from '@/components/sections/contact';
 
 export default function Home() {
   return (
@@ -27,6 +28,8 @@ export default function Home() {
           <Awards />
           <Separator className="my-16" />
           <Resume />
+          <Separator className="my-16" />
+          <Contact />
         </div>
       </main>
     </div>
