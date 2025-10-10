@@ -34,7 +34,7 @@ export default function Resume() {
             <CollapsibleContent className="mt-4">
               <Card className="overflow-hidden">
                 <CardContent className="p-0">
-                  <div className="aspect-[1/1] w-full">
+                  <div className="w-full h-[80vh]">
                     <iframe
                       src={`${portfolioData.resumeUrl}#toolbar=0&navpanes=0&scrollbar=0`}
                       className="h-full w-full border-0"

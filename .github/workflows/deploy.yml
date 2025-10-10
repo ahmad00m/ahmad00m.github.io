@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # Or your default branch
+      - main
 
 jobs:
   build-and-deploy:
@@ -12,15 +12,20 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install and Build
         run: |
           npm install
           npm run build
 
-      - name: Deploy
+      - name: Deploy to main branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
+          # This is the crucial part: for a user page (username.github.io),
+          # the content must be deployed to the main branch.
+          publish_branch: main
+          # This prevents the action from deleting the .git directory in the publish_dir
+          keep_files: true
