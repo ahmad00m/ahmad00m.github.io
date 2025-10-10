@@ -35,7 +35,7 @@ export default function Resume() {
         </div>
 
         <CollapsibleContent className="mt-4">
-          <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full mx-auto">
             <Card className="overflow-hidden">
               <CardContent className="p-0">
                 <div className="w-full h-[80vh]">
