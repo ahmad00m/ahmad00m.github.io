@@ -220,22 +220,32 @@ export const portfolioData = {
   awards: [
     {
       name: 'Data Science Summer Fellowship',
-      // issuer: 'Innovatech Solutions',
+      issuer: 'University of California, Riverside',
       year: 'Summer 2025',
     },
     {
+      name: 'Sigma Xi Scientific Research Honor Society ',
+      issuer: 'Loyola Marymount University',
+      year: '2023',
+    },
+    {
+      name: 'Rains Undergraduate Research Fellow',
+      issuer: 'Loyola Marymount University',
+      year: '2022-2023',
+    },
+    {
       name: 'William McLaughlin Scholarship Recipient',
-      // issuer: 'GitHub',
+      issuer: 'Loyola Marymount University',
       year: '2021-2023',
     },
     {
       name: 'Seaver College Summer Opportunities for Advanced Research (SOAR)',
-      // issuer: 'The Webby Awards',
+      issuer: 'Loyola Marymount University',
       year: 'Summer 2022',
     },
     {
       name: 'Dean’s List',
-      // issuer: 'The Webby Awards',
+      issuer: 'Loyola Marymount University',
       year: '2019-2023',
     },
   ],
