@@ -1,6 +1,4 @@
 import {
-  Github,
-  Linkedin,
   FileText,
   Code,
   Briefcase,
