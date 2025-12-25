@@ -7,6 +7,9 @@ import Script from 'next/script';
 export const metadata: Metadata = {
   title: 'Ahmad Mersaghian',
   description: 'A modern and elegant professional portfolio.',
+  verification: {
+    google: 'gQj-a7iqKPkvpAgmCQEhyY18CJiAtLx3t7p-C8Fpy64',
+  },
 };
 
 export default function RootLayout({
