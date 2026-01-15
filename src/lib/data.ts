@@ -154,7 +154,7 @@ export const portfolioData = {
   ],
   experience: [
   {
-    role: 'Graduate Student Researcher',
+    role: 'Graduate Research Student',
     company: 'University of California, Riverside',
     period: 'Oct 2024 – Present',
     description:
